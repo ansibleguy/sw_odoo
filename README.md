@@ -53,7 +53,7 @@ ansible-galaxy install -r requirements.yml
 
   Language: German or English
 
-* We are also developing **custom modules and functionality** for Odoo.
+* We can develop **custom Odoo-Modules and functionality** for your business needs.
 
   See: [Odoo Module Development](https://www.o-x-l.com/odoo)
 
@@ -121,6 +121,8 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 ----
 
 ## Info
+
+**Odoo Documentation**: [Odoo Documentation](https://docs.oxl.at/software/odoo.html)
 
 * **Note:** this role currently only supports debian-based systems
 
