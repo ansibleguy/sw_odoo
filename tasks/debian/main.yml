@@ -66,6 +66,28 @@
     owner: 'root'
     group: 'odoo'
 
+- name: Odoo | Generate Admin-Password Hash
+  ansible.builtin.command: "python3 -c
+  \"from os import environ;
+  from passlib.context import CryptContext;
+  print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))\""
+  environment:
+    SECRET: "{{ ODOO_CONFIG.admin_pwd }}"
+  register: odoo_admin_pwd_hash
+  no_log: true
+  changed_when: false
+
+- name: Odoo | Generate Database-Password Hash
+  ansible.builtin.command: "python3 -c
+  \"from os import environ;
+  from passlib.context import CryptContext;
+  print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))\""
+  environment:
+    SECRET: "{{ ODOO_CONFIG.db.pwd }}"
+  register: odoo_db_pwd_hash
+  no_log: true
+  changed_when: false
+
 - name: Odoo | Adding config
   ansible.builtin.copy:
     content: |
@@ -74,11 +96,11 @@
 
       [options]
       proxy_mode = True
-      admin_passwd = {{ ODOO_CONFIG.admin_pwd }}
+      admin_passwd = {{ odoo_admin_pwd_hash.stdout }}
       db_host = {{ ODOO_CONFIG.db.host }}
       db_port = {{ ODOO_CONFIG.db.port }}
       db_user = {{ ODOO_CONFIG.db.user }}
-      db_password = {{ ODOO_CONFIG.db.pwd }}
+      db_password = {{ odoo_db_pwd_hash.stdout }}
 
       addons_path = {{ ODOO_CONFIG.path.addons }}
       default_productivity_apps = True
@@ -87,6 +109,7 @@
     group: 'odoo'
     mode: 0640
   no_log: true
+  changed_when: false  # password hashes
 
 - name: Odoo | Adding service-override directory
   ansible.builtin.file:

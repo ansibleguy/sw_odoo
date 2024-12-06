@@ -106,7 +106,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 * **Configuration**
   * **Default config**:
     * Auto-generated passwords
-    * Addons directory: `/var/local/odoo/addons`
+    * Addons directory: `/var/lib/odoo/addons`
  
 
   * **Default opt-ins**:
@@ -146,13 +146,13 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 
       <img src="https://raw.githubusercontent.com/ansibleguy/sw_odoo_community/latest/docs/app_download.png" alt="Odoo app download" width="300"/>
   
-    * Move the ZIP to your server and place it inside the addons-directory (`/var/local/odoo/addons` by default in this setup) 
+    * Move the ZIP to your server and place it inside the addons-directory (`/var/lib/odoo/addons` by default in this setup) 
 
-    * Unzip it: `cd /var/local/odoo/addons && unzip project-17.0.zip`
+    * Unzip it: `cd /var/lib/odoo/addons && unzip project-17.0.zip`
 
-    * Move the modules you want/need: `mv project-17.0/project_* /var/local/odoo/addons/`
+    * Move the modules you want/need: `mv project-17.0/project_* /var/lib/odoo/addons/`
 
-    * Clean-up: `rm -r /var/local/odoo/addons/project-17.0/`
+    * Clean-up: `rm -r /var/lib/odoo/addons/project-17.0/`
 
     * Restart odoo: `systemctl restart odoo.service`
 
@@ -165,7 +165,7 @@ ansible-playbook -K -D -i inventory/hosts.yml playbook.yml -e debug=yes
 
     * Install the community-edition first
     * Stop the service: `systemctl stop odoo.service`
-    * Download the enterprise binary `.deb` and install it as root: `dpkg -i odoo-enterprise.deb`
+    * Download the enterprise binary `.deb` and install it as root: `dpkg -i odoo_17.0+e.latest_all.deb`
 
     NOTE: Migrating from enterprise back to community edition is not easy!
 

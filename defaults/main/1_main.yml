@@ -22,7 +22,7 @@ defaults_odoo:
     pwd: "{{ lookup('password', tmp_pwd_file_prefix + '_odoo_db chars=ascii_letters,digits length=' + random_pwd_length) }}"
 
   path:
-    addons: '/var/local/odoo/addons'
+    addons: '/var/lib/odoo/addons'
 
   backup:
     enable: true
