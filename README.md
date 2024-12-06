@@ -53,6 +53,10 @@ ansible-galaxy install -r requirements.yml
 
   Language: German or English
 
+* We are also developing **custom modules and functionality** for Odoo.
+
+  See: [Odoo Module Development](https://www.o-x-l.com/odoo)
+
 * You want a simple **Ansible GUI**?
 
   Check-out this [Ansible WebUI](https://github.com/ansibleguy/webui)
