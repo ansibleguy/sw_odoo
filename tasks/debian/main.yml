@@ -173,7 +173,7 @@
     name: 'odoo-backup.timer'
     enabled: false
     state: stopped
-#  ignore_errors: true
+  ignore_errors: true
   when: not ODOO_CONFIG.backup.enable | bool
 
 - name: Odoo | Webserver
