@@ -7,6 +7,7 @@ debug: false
 defaults_odoo:
   version: '17.0'
   enterprise: false
+  apt_gpg_key: "5D134C924CB06330DCEFE2A1DEF2A2198183CBB5"
   manage:
     webserver: true  # install and configure nginx
     database: true  # install postgresql
