@@ -31,7 +31,7 @@
       # ansibleguy.sw_odoo_community
       deb [signed-by=/usr/share/keyrings/odoo-archive-keyring.gpg] https://nightly.odoo.com/{{ ODOO_CONFIG.version }}/nightly/deb/ ./
     dest: '/etc/apt/sources.list.d/odoo.list'
-    mode: "0644"
+    mode: '0644'
   when: not ODOO_CONFIG.enterprise | bool
 
 - name: Odoo | Repository
@@ -41,7 +41,7 @@
       # ansibleguy.sw_odoo_community
       # deb [signed-by=/usr/share/keyrings/odoo-archive-keyring.gpg] https://nightly.odoo.com/{{ ODOO_CONFIG.version }}/nightly/deb/ ./
     dest: '/etc/apt/sources.list.d/odoo.list'
-    mode: "0644"
+    mode: '0644'
   when: ODOO_CONFIG.enterprise | bool
 
 - name: Odoo | Install database
@@ -61,7 +61,7 @@
 - name: Odoo | Adding addons directory
   ansible.builtin.file:
     path: "{{ ODOO_CONFIG.path.addons }}"
-    mode: "0750"
+    mode: '0750'
     state: directory
     owner: 'root'
     group: 'odoo'
@@ -109,21 +109,21 @@
     dest: '/etc/odoo/odoo.conf'
     owner: 'root'
     group: 'odoo'
-    mode: "0640"
+    mode: '0640'
   no_log: true
   changed_when: false  # password hashes
 
 - name: Odoo | Adding service-override directory
   ansible.builtin.file:
     path: '/etc/systemd/system/odoo.service.d'
-    mode: "0750"
+    mode: '0750'
     state: directory
 
 - name: Odoo | Adding service-override
   ansible.builtin.template:
     src: 'templates/etc/systemd/system/odoo.service.d/override.conf.j2'
     dest: '/etc/systemd/system/odoo.service.d/override.conf'
-    mode: "0640"
+    mode: '0640'
 
 - name: Odoo | Starting/Enabling database
   ansible.builtin.systemd:
@@ -143,7 +143,7 @@
 - name: Odoo | Adding backup directory
   ansible.builtin.file:
     path: "{{ ODOO_CONFIG.backup.path }}"
-    mode: "0750"
+    mode: '0750'
     state: directory
     owner: 'root'
     group: 'postgres'
@@ -173,7 +173,10 @@
     name: 'odoo-backup.timer'
     enabled: false
     state: stopped
-  ignore_errors: true
+  register: odoo_backup_dis
+  failed_when:
+    - odoo_backup_dis.failed
+    - "'Could not find the requested service' not in odoo_backup_dis.msg"
   when: not ODOO_CONFIG.backup.enable | bool
 
 - name: Odoo | Webserver
