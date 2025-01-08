@@ -1,0 +1,14 @@
+{{ ansible_managed|comment }}
+{{ odoo_ansible_managed|comment }}
+
+## Odoo Configuration File
+
+{% for key, value in ODOO_CONFIG.conf.items() %}
+{% if value is boolean %}
+{{ key }} = {{ 'True' if value else 'False' }}
+{% elif value is number %}
+{{ key }} = {{ value }}
+{% else %}
+{{ key }} = "{{ value }}"
+{% endif %}
+{% endfor %}

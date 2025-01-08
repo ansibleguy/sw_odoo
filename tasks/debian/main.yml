@@ -60,7 +60,7 @@
 
 - name: Odoo | Adding addons directory
   ansible.builtin.file:
-    path: "{{ ODOO_CONFIG.path.addons }}"
+    path: "{{ ODOO_CONFIG.conf.addons_path }}"
     mode: '0750'
     state: directory
     owner: 'root'
@@ -73,7 +73,7 @@
     from passlib.context import CryptContext;
     print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))"
   environment:
-    SECRET: "{{ ODOO_CONFIG.admin_pwd }}"
+    SECRET: "{{ ODOO_CONFIG.conf.admin_passwd }}"
   register: odoo_admin_pwd_hash
   no_log: true
   changed_when: false
@@ -85,33 +85,18 @@
     from passlib.context import CryptContext;
     print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))"
   environment:
-    SECRET: "{{ ODOO_CONFIG.db.pwd }}"
+    SECRET: "{{ ODOO_CONFIG.conf.db_password }}"
   register: odoo_db_pwd_hash
   no_log: true
   changed_when: false
 
 - name: Odoo | Adding config
-  ansible.builtin.copy:
-    content: |
-      # ansible_managed
-      # ansibleguy.sw_odoo_community
-
-      [options]
-      proxy_mode = True
-      admin_passwd = {{ odoo_admin_pwd_hash.stdout }}
-      db_host = {{ ODOO_CONFIG.db.host }}
-      db_port = {{ ODOO_CONFIG.db.port }}
-      db_user = {{ ODOO_CONFIG.db.user }}
-      db_password = {{ odoo_db_pwd_hash.stdout }}
-
-      addons_path = {{ ODOO_CONFIG.path.addons }}
-      default_productivity_apps = True
+  ansible.builtin.template:
+    src: odoo.conf.j2
     dest: '/etc/odoo/odoo.conf'
-    owner: 'root'
+    owner: 'odoo'
     group: 'odoo'
     mode: '0640'
-  no_log: true
-  changed_when: false  # password hashes
 
 - name: Odoo | Adding service-override directory
   ansible.builtin.file:
