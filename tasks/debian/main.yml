@@ -68,10 +68,10 @@
 
 - name: Odoo | Generate Admin-Password Hash
   ansible.builtin.command: |
-    "python3 -c
-    \"from os import environ;
+    python3 -c
+    "from os import environ;
     from passlib.context import CryptContext;
-    print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))\""
+    print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))"
   environment:
     SECRET: "{{ ODOO_CONFIG.admin_pwd }}"
   register: odoo_admin_pwd_hash
@@ -80,10 +80,10 @@
 
 - name: Odoo | Generate Database-Password Hash
   ansible.builtin.command: |
-    "python3 -c
-    \"from os import environ;
+    python3 -c
+    "from os import environ;
     from passlib.context import CryptContext;
-    print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))\""
+    print(CryptContext(['pbkdf2_sha512']).hash(environ['SECRET']))"
   environment:
     SECRET: "{{ ODOO_CONFIG.db.pwd }}"
   register: odoo_db_pwd_hash
