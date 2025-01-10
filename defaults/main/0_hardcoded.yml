@@ -2,5 +2,8 @@
 
 random_pwd_length: '50'  # must be string-type
 tmp_pwd_file_prefix: '/tmp/.ansibleguy.sw_odoo_community'
+odoo_ansible_managed: |
+  https://github.com/ansibleguy/sw_odoo_community
+  template: ansibleguy.sw_odoo_community/templates/etc/odoo/odoo.conf.j2
 
 ODOO_HC: {}

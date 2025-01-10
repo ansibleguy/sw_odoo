@@ -14,16 +14,16 @@ defaults_odoo:
 
   hostnames:
 
-  # admin-pwd = database master-pwd
-  admin_pwd: "{{ lookup('password', tmp_pwd_file_prefix + '_odoo_adm chars=ascii_letters,digits length=' + random_pwd_length) }}"
-  db:
-    host: 'False'
-    port: 'False'
-    user: 'odoo'
-    pwd: "{{ lookup('password', tmp_pwd_file_prefix + '_odoo_db chars=ascii_letters,digits length=' + random_pwd_length) }}"
-
-  path:
-    addons: '/var/lib/odoo/addons'
+  conf:
+    proxy_mode: true
+    # admin-pwd = database master-pwd
+    admin_passwd: "{{ odoo.admin_pwd | default(lookup('password', tmp_pwd_file_prefix + '_odoo_adm chars=ascii_letters,digits length=' + random_pwd_length)) }}"
+    db_host: "{{ odoo.db.host | default(false) }}"
+    db_port: "{{ odoo.db.port | default(false) }}"
+    db_user: "{{ odoo.db.user | default('odoo') }}"
+    db_password: "{{ odoo.db.pwd | default(lookup('password', tmp_pwd_file_prefix + '_odoo_db chars=ascii_letters,digits length=' + random_pwd_length)) }}"
+    addons_path: "{{ odoo.path.addons | default('/var/lib/odoo/addons') }}"
+    default_productivity_apps: true
 
   backup:
     enable: true
