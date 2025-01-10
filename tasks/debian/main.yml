@@ -97,6 +97,7 @@
     owner: 'root'
     group: 'odoo'
     mode: '0640'
+  changed_when: false  # password hashes will always change..
 
 - name: Odoo | Adding service-override directory
   ansible.builtin.file:
