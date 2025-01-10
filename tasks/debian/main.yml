@@ -23,6 +23,21 @@
   args:
     creates: '/usr/share/keyrings/odoo-archive-keyring.gpg'
     executable: '/bin/bash'
+  register: odoo_repo_key
+
+- name: Odoo | Fail if repository-key fingerprint does not match
+  ansible.builtin.shell:
+    cmd: |
+      set -o pipefail
+      gpg --show-keys --with-fingerprint --with-colons /usr/share/keyrings/odoo-archive-keyring.gpg 2>/dev/null | grep -m 1 fpr | awk -F: '{print $10}'
+  args:
+    executable: /bin/bash
+  when: odoo_repo_key.changed
+  register: odoo_repo_key_fp
+  changed_when: odoo_repo_key_fp.rc != 0
+  failed_when: >
+    odoo_repo_key_fp.failed or
+    odoo_repo_key_fp.stdout.strip() != ODOO_CONFIG.apt_gpg_key_fingerprint
 
 - name: Odoo | Community Repository
   ansible.builtin.copy:
