@@ -34,6 +34,7 @@
     executable: /bin/bash
   when: odoo_repo_key.changed
   register: odoo_repo_key_fp
+  changed_when: odoo_repo_key_fp.rc != 0
   failed_when: >
     odoo_repo_key_fp.failed or
     odoo_repo_key_fp.stdout.strip() != ODOO_CONFIG.apt_gpg_key_fingerprint
