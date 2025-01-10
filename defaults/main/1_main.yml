@@ -16,12 +16,12 @@ defaults_odoo:
   conf:
     proxy_mode: true
     # admin-pwd = database master-pwd
-    admin_passwd: "{{ lookup('password', tmp_pwd_file_prefix + '_odoo_adm chars=ascii_letters,digits length=' + random_pwd_length) }}"
-    db_host: 'False'
-    db_port: 'False'
-    db_user: 'odoo'
-    db_password: "{{ lookup('password', tmp_pwd_file_prefix + '_odoo_db chars=ascii_letters,digits length=' + random_pwd_length) }}"
-    addons_path: '/var/lib/odoo/addons'
+    admin_passwd: "{{ odoo.admin_pwd | default(lookup('password', tmp_pwd_file_prefix + '_odoo_adm chars=ascii_letters,digits length=' + random_pwd_length)) }}"
+    db_host: "{{ odoo.db.host | default(false) }}"
+    db_port: "{{ odoo.db.port | default(false) }}"
+    db_user: "{{ odoo.db.user | default('odoo') }}"
+    db_password: "{{ odoo.db.pwd | default(lookup('password', tmp_pwd_file_prefix + '_odoo_db chars=ascii_letters,digits length=' + random_pwd_length)) }}"
+    addons_path: "{{ odoo.path.addons | default('/var/lib/odoo/addons') }}"
     default_productivity_apps: true
 
   backup:

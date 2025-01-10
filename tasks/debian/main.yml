@@ -92,9 +92,9 @@
 
 - name: Odoo | Adding config
   ansible.builtin.template:
-    src: odoo.conf.j2
+    src: 'templates/etc/odoo/odoo.conf.j2'
     dest: '/etc/odoo/odoo.conf'
-    owner: 'odoo'
+    owner: 'root'
     group: 'odoo'
     mode: '0640'
 

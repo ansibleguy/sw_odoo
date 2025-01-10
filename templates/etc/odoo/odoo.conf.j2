@@ -4,11 +4,11 @@
 ## Odoo Configuration File
 
 {% for key, value in ODOO_CONFIG.conf.items() %}
-{% if value is boolean %}
-{{ key }} = {{ 'True' if value else 'False' }}
-{% elif value is number %}
+{%   if value is boolean %}
+{{ key }} = {{ 'True' if value | bool else 'False' }}
+{%   elif value is number %}
 {{ key }} = {{ value }}
-{% else %}
+{%   else %}
 {{ key }} = "{{ value }}"
-{% endif %}
+{%   endif %}
 {% endfor %}
