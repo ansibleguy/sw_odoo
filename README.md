@@ -8,7 +8,6 @@ Role to deploy [Odoo Community-Edition](https://www.odoo.com/documentation/17.0/
 
 This role will work to install a self-hosted enterprise-edition installation - but will not completely automate it, as you need a custom setup-binary for it.
 
-<a href='https://ko-fi.com/ansible0guy' target='_blank'><img height='35' style='border:0px;height:46px;' src='https://az743702.vo.msecnd.net/cdn/kofi3.png?v=0' border='0' alt='Buy me a coffee' />
 
 [![Molecule Test Status](https://badges.ansibleguy.net/sw_odoo_community.molecule.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/molecule.sh.j2)
 [![YamlLint Test Status](https://badges.ansibleguy.net/sw_odoo_community.yamllint.svg)](https://github.com/ansibleguy/_meta_cicd/blob/latest/templates/usr/local/bin/cicd/yamllint.sh.j2)
